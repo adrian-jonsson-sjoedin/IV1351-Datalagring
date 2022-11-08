@@ -1,0 +1,10 @@
+Fundamentals_of_Database_Systems_Ramez_Elmasri_Shamkant_B._Navathe_z-lib.org.pdf
+# Latex
+*.fdb_latexmk
+*.aux
+*.fls
+*.log
+*.out
+*.gz
+*.toc
+
