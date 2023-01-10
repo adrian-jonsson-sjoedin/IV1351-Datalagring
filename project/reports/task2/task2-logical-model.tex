@@ -66,11 +66,7 @@ The last step was to split up some tables a bit more to try and achieve 3NF.
 Having the logical model done we created the database using Astah's export to SQL function. Unfortunately you can not directly use it since it gave quite a lot of errors,
 but it gave a good foundation to build upon.
 
-For writing the SQl scripts that created the databases and populated it with data MySQL Workbench and DBGate was used. The logical model was created in Astah. 
-
-
-
-
+For writing the SQl scripts that created the databases and populated it with data MySQL Workbench and DbGate was used. The logical model was created in Astah. 
 
 \begin{figure}[h]
     \begin{center}
@@ -80,8 +76,8 @@ For writing the SQl scripts that created the databases and populated it with dat
     \end{center}
 \end{figure}
 
-
 \chapter{Result}
+
 \label{sec:result}
 In figure \ref{fig:logicalModel} we can see the finished Logical Model. The SQL scripts can be found here:
  \href{https://github.com/adrian-jonsson-sjoedin/IV1351-Datalagring/tree/main/project/SQL}{GitHub}.
@@ -141,29 +137,5 @@ I left the table in the Logical Model though because even though it is data that
 One final thing about the choice of data types and constraints. I used MySQL which is why I went for \textit{CHAR} in the once case where I knew exactly how long a 
 string should be. I also used \textit{DECIMAL} since it makes it possible to define exactly how many decimals are allowed. For the constraints only NOT NULL and UNIQUE
 are indicated in fig. \ref{fig:logicalModel}, but all \textit{INT}s and \textit{DECIMAL}s have the constraint that they have to be larger or equal to zero.
-
-
-% This is my first attempt at modeling a database but I think I've gotten everything that was specified in the customer description.
-% I have quite a few attributes that are not allowed to be nulled and for those I've simply decided that upon what I think the
-% customer would want since it wasn't specified if null values where allowed. For example in the entity \textit{Instructor}
-% all three attributes are not allowed to be null, this because it stands to reason that an employer would want to know which
-% instruments an instructor knows and what genres they can teach.
-
-% The customer description mentioned that there should be possible to store a contact person for a student, but not that they
-% must have one. Because of this I had an entity called \textit{ContactPerson} in an earlier version of my conceptual model, however]
-% since I strived to have no duplicated data I had to remove it since that entity then became empty. Instead we have an attribute
-% \textit{hasContactPerson} in \textit{Student} that will have a reference to \textit{Person} for the contact person. This is also
-% the reason why the attribute \textit{personNumber} can be null, since there is no point in storing the person number for a
-% contact person.
-
-% There is also an entity \textit{BookingOfMusicLesson} for which it can be argued that its associations might be a bit weird.
-% My thought behind it was that the administrative staff handles a booking by checking what the student wants and then look at
-% what is available and can offered to the student. That then books one out of the three lesson types. But reading the name now,
-% for example "\textit{BookingOfMusicLesson books IndividualLesson}" does come across a bit strange. Perhaps a better name might
-% have been just \textit{MusicLesson}.
-
-% Apart from the above mentioned I believe the conceptual model is sufficient and that it follows the rules and constraints that
-% a conceptual model should have. Naming conventions have been followed and every entity has an associations and every attribute
-% have its cardinality specified.
 
 \end{document}
