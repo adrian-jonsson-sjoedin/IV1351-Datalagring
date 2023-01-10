@@ -96,9 +96,12 @@ FROM(
       persons.last_name
     ORDER BY
       Count(*) DESC
-  ) AS instructors
-WHERE
-  total_number_of_lessons > 6;
+  ) AS instructors;
+    
+-- SELECT * FROM workload   
+-- WHERE
+--   total_number_of_lessons > 6;
+  
   
   -- List all ensembles held during the next week, sorted by music genre and weekday. 
   -- For each list if it's fully booked, has 1-2 spots left, or has more spots left
@@ -117,10 +120,6 @@ SELECT
     END AS spots_left
 FROM ensemble
     INNER JOIN music_lessons ON music_lessons.id = ensemble.lesson_id 
-WHERE WEEK(music_lessons.time_start) = WEEK(NOW())+1 -- +2 for testing since I only have ensembles starting from week 4
+WHERE WEEK(music_lessons.time_start) = WEEK(NOW())+1 -- Ensembles are scheduled in week 4 so set = 4 for testing
 GROUP BY ensemble.genre, music_lessons.numb_of_participants, music_lessons.time_start, ensemble.maximum_number_of_students
 ORDER BY weekday DESC;
-  
-  
-  
-  
