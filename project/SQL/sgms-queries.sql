@@ -3,6 +3,9 @@
 -- GROUP BY YEAR(time_start), DATE_FORMAT(time_start, '%M');
 
 -- total number of lessons per year and month for each lesson type
+-- This query is expected to be performed a few times per week.
+DROP VIEW IF EXISTS  lessons_per_month_year;
+CREATE VIEW lessons_per_month_year AS 
 SELECT
   YEAR(time_start) AS year,
   DATE_FORMAT(time_start, '%M') AS month,
@@ -32,7 +35,10 @@ GROUP BY
   DATE_FORMAT(time_start, '%M');
   
 -- Show how many students there are with no siblings, 1 sibling, 2 siblings etc.
+-- This query is expected to be performed a few times per week
   -- i need to check how many students with different id have a parent_id that is the same
+DROP VIEW IF EXISTS  siblings;
+CREATE VIEW siblings AS 
 SELECT
   id AS 'student_id',
   --   parent_id,
@@ -65,6 +71,9 @@ ORDER BY
   'total_number_of_lessons';
   
 -- list of all instructors who have given more than a specific nr of lessons during the current month. Sum all lessons and sort the reuslt by number of given lesson
+-- This query will be executed daily
+DROP VIEW IF EXISTS  workload;
+CREATE VIEW workload AS 
 SELECT 
     *
 FROM(
@@ -93,23 +102,23 @@ WHERE
   
   -- List all ensembles held during the next week, sorted by music genre and weekday. 
   -- For each list if it's fully booked, has 1-2 spots left, or has more spots left
+  -- No information of how often this query will be executed
+DROP VIEW IF EXISTS  ensemble_spots;
+CREATE VIEW ensemble_spots AS 
 SELECT 
-    ensemble.genre AS genre,
-    WEEK(music_lessons.time_start) AS week,
-    DATE_FORMAT(music_lessons.time_start, '%a') AS weekday,
-    CASE
+    ensemble.genre AS genre, 
+    WEEK(music_lessons.time_start) AS week, 
+    DATE_FORMAT(music_lessons.time_start, '%a') AS weekday, 
+    CASE 
         WHEN music_lessons.numb_of_participants = ensemble.maximum_number_of_students THEN 'Full'
         WHEN (ensemble.maximum_number_of_students - music_lessons.numb_of_participants) = 1 THEN '1 spot left'
         WHEN (ensemble.maximum_number_of_students - music_lessons.numb_of_participants) = 2 THEN '2 spots left'
         ELSE '3 or more spots left'
     END AS spots_left
-FROM
-    ensemble
-        INNER JOIN
-    music_lessons ON music_lessons.id = ensemble.lesson_id
-WHERE
-    WEEK(music_lessons.time_start) = WEEK(NOW()) + 1 -- +2 for testing since I don't have any ensembles scheduled next week
-GROUP BY ensemble.genre , music_lessons.numb_of_participants , music_lessons.time_start , ensemble.maximum_number_of_students
+FROM ensemble
+    INNER JOIN music_lessons ON music_lessons.id = ensemble.lesson_id 
+WHERE WEEK(music_lessons.time_start) = WEEK(NOW())+1 -- +2 for testing since I only have ensembles starting from week 4
+GROUP BY ensemble.genre, music_lessons.numb_of_participants, music_lessons.time_start, ensemble.maximum_number_of_students
 ORDER BY weekday DESC;
   
   
