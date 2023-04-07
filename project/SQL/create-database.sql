@@ -56,8 +56,41 @@ CREATE TABLE music_lesson (
     time_end TIMESTAMP NOT NULL,
     skill_level ENUM('beginner', 'intermediate', 'advanced') NOT NULL,
     instructor_id INT NOT NULL,
-    FOREIGN KEY (instructor_id) REFERENCES instructor(id)
+    FOREIGN KEY (instructor_id) REFERENCES instructor(id),
+    UNIQUE KEY lesson_unique (time_start, instructor_id)
 );
+-- --------------------------------------------------------
+-- Make it so that we can't have overlapping lesson for the same instructor
+DELIMITER //
+CREATE TRIGGER before_insert_music_lesson
+BEFORE INSERT ON music_lesson
+FOR EACH ROW
+BEGIN
+    IF EXISTS (
+        SELECT 1
+        FROM music_lesson
+        WHERE instructor_id = NEW.instructor_id
+          AND time_end > NEW.time_start
+    ) THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Overlapping lesson detected';
+    END IF;
+END//
+CREATE TRIGGER before_update_music_lesson
+BEFORE UPDATE ON music_lesson
+FOR EACH ROW
+BEGIN
+    IF EXISTS (
+        SELECT 1
+        FROM music_lesson
+        WHERE instructor_id = NEW.instructor_id
+          AND time_end > NEW.time_start
+          AND id <> NEW.id
+    ) THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Overlapping lesson detected';
+    END IF;
+END//
+DELIMITER ;
+
 CREATE TABLE parent (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     person_id INT NOT NULL,
@@ -108,6 +141,37 @@ CREATE TABLE booking (
     FOREIGN KEY (music_lesson_id) REFERENCES music_lesson(id),
     FOREIGN KEY (student_id) REFERENCES student(id)
 );
+ -- -------------------------------------------------------------------
+-- Make it so that we can't have overlapping lessons for the same student
+DELIMITER //
+CREATE TRIGGER before_insert_booking
+BEFORE INSERT ON booking
+FOR EACH ROW
+BEGIN
+    IF EXISTS (
+        SELECT 1
+        FROM booking
+        WHERE student_id = NEW.student_id
+          AND time_end > NEW.time_start
+    ) THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Overlapping lesson detected';
+    END IF;
+END//
+CREATE TRIGGER before_update_booking
+BEFORE UPDATE ON booking
+FOR EACH ROW
+BEGIN
+    IF EXISTS (
+        SELECT 1
+        FROM booking
+        WHERE student_id = NEW.student_id
+          AND time_end > NEW.time_start
+          AND id <> NEW.id
+    ) THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Overlapping lesson detected';
+    END IF;
+END//
+DELIMITER ;
 CREATE TABLE genre (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     genre VARCHAR(100) NOT NULL UNIQUE,
@@ -119,7 +183,8 @@ CREATE TABLE ensemble (
     minimum_number_of_students INT NOT NULL,
     maximum_number_of_students INT NOT NULL,
     genre_id INT NOT NULL,
-    FOREIGN KEY (genre_id) REFERENCES genre(id)
+    FOREIGN KEY (genre_id) REFERENCES genre(id),
+    FOREIGN KEY (music_lesson_id) REFERENCES music_lesson(id)
 );
 ALTER TABLE
   ensemble
@@ -135,7 +200,8 @@ CREATE TABLE group_lesson (
     minimum_number_of_students INT NOT NULL,
     maximum_number_of_students INT NOT NULL,
     instrument_type_id INT NOT NULL,
-    FOREIGN KEY (instrument_type_id) REFERENCES instrument_type(id)
+    FOREIGN KEY (instrument_type_id) REFERENCES instrument_type(id),
+    FOREIGN KEY (music_lesson_id) REFERENCES music_lesson(id)
 );
 ALTER TABLE
   group_lesson
@@ -148,7 +214,8 @@ ADD
 CREATE TABLE individual_lesson (
     music_lesson_id INT NOT NULL,
     instrument_type_id INT NOT NULL,
-    FOREIGN KEY (instrument_type_id) REFERENCES instrument_type(id)
+    FOREIGN KEY (instrument_type_id) REFERENCES instrument_type(id),
+    FOREIGN KEY (music_lesson_id) REFERENCES music_lesson(id)
 );
 ALTER TABLE
   individual_lesson
