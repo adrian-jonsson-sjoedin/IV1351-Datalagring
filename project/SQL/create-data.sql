@@ -2,51 +2,45 @@
 -- DELETE FROM
 --   sound_good_music_school;
 -- DELETE FROM
---   addresses;
+--   address;
 -- DELETE FROM
---   application_forms;
+--   application_form;
 -- DELETE FROM
---   bookings;
+--   booking;
 -- DELETE FROM
 --   ensemble;
 -- DELETE FROM
---   genres;
+--   genre;
 -- DELETE FROM
---   group_lessons;
+--   group_lesson;
 -- DELETE FROM
 --   individual_lesson;
 -- DELETE FROM
---   instructors;
+--   instructor;
 -- DELETE FROM
 --   instrument_inventory;
 -- DELETE FROM
---   instrument_types;
+--   instrument_type;
 -- DELETE FROM
---   lease_contracts;
+--   lease_contract;
 -- DELETE FROM
---   monthly_lessons;
+--   music_lesson;
 -- DELETE FROM
---   music_lessons;
+--   parent;
 -- DELETE FROM
---   parents;
--- DELETE FROM
---   persons;
+--   person;
 -- DELETE FROM
 --   pricing_scheme;
 -- DELETE FROM
---   students;
+--   student;
 -- ------------------------------------------------------------------------------
   -- ----------- Tables involving the human actors in the model -------------------
   -- ------------------------------------------------------------------------------
-  -- Addresses
+
 INSERT INTO
-  `addresses` (`street`, `zip`, `city`)
+  `address` (`street`, `zip`, `city`)
 VALUES
-  (
-    "Ap #865-9831 Lacus. Avenue",
-    "10692",
-    "Linköping"
-  ),
+  ("Ap #865-9831 Lacus. Avenue", "10692","Linköping"),
   ("9680 Elit, Road", "61562", "Mjölby"),
   ("784-6255 Tincidunt St.", "63876", "Avesta"),
   ("3418 Nulla Avenue", "42334", "Hudiksvall"),
@@ -55,13 +49,13 @@ VALUES
   ("215-3895 Ridiculus Rd.", "47855", "Vänersborg"),
   ("393 Ligula. Street", "28114", "Vetlanda"),
   ("5113 Id Road", "90065", "Värnamo"),
-  ("201-7469 Amet, Av.", "05812", "Söderhamn");
---   ("Ap #920-9559 Eleifend Avenue", "52034", "Hofors"),
-  --   ("297-9511 Mi Rd.", "97774", "Tranås"),
-  --   ("Ap #946-8820 Morbi St.", "67167", "Vetlanda"),
-  --   ("466-7312 Quis St.", "67058", "Falun"),
-  --   ("992-887 Felis, St.", "47654", "Motala"),
-  --   ("2833 Rutrum, St.", "53189", "Värnamo"),
+  ("201-7469 Amet, Av.", "05812", "Söderhamn"),
+  ("Ap #920-9559 Eleifend Avenue", "52034", "Hofors"),
+  ("297-9511 Mi Rd.", "97774", "Tranås"),
+  ("Ap #946-8820 Morbi St.", "67167", "Vetlanda"),
+  ("466-7312 Quis St.", "67058", "Falun"),
+  ("992-887 Felis, St.", "47654", "Motala"),
+  ("2833 Rutrum, St.", "53189", "Värnamo");
   -- Soundgood music school
 INSERT INTO
   sound_good_music_school (available_spots, address_id)
@@ -72,7 +66,7 @@ VALUES
       SELECT
         id
       FROM
-        addresses
+        address
       where
         street = 'Ap #865-9831 Lacus. Avenue'
         AND zip = '10692'
@@ -80,7 +74,7 @@ VALUES
   );
 -- Personal data
 INSERT INTO
-  persons (
+  person (
     person_number,
     first_name,
     last_name,
@@ -100,7 +94,7 @@ VALUES
       SELECT
         id
       FROM
-        addresses
+        address
       WHERE
         street = '9680 Elit, Road'
     )
@@ -116,7 +110,7 @@ VALUES
       SELECT
         id
       FROM
-        addresses
+        address
       WHERE
         street = '3418 Nulla Avenue'
     )
@@ -132,7 +126,7 @@ VALUES
       SELECT
         id
       FROM
-        addresses
+        address
       WHERE
         street = '784-6255 Tincidunt St.'
     )
@@ -148,7 +142,7 @@ VALUES
       SELECT
         id
       FROM
-        addresses
+        address
       WHERE
         street = 'Ap #941-9878 Aenean Rd.'
     )
@@ -164,7 +158,7 @@ VALUES
       SELECT
         id
       FROM
-        addresses
+        address
       WHERE
         street = 'Ap #452-4803 Mus. St.'
     )
@@ -180,7 +174,7 @@ VALUES
       SELECT
         id
       FROM
-        addresses
+        address
       WHERE
         street = '393 Ligula. Street'
     )
@@ -196,7 +190,7 @@ VALUES
       SELECT
         id
       FROM
-        addresses
+        address
       WHERE
         street = '9680 Elit, Road'
     )
@@ -212,7 +206,7 @@ VALUES
       SELECT
         id
       FROM
-        addresses
+        address
       WHERE
         street = '9680 Elit, Road'
     )
@@ -228,7 +222,7 @@ VALUES
       SELECT
         id
       FROM
-        addresses
+        address
       WHERE
         street = '784-6255 Tincidunt St.'
     )
@@ -244,7 +238,7 @@ VALUES
       SELECT
         id
       FROM
-        addresses
+        address
       WHERE
         street = '9680 Elit, Road'
     )
@@ -260,7 +254,7 @@ VALUES
       SELECT
         id
       FROM
-        addresses
+        address
       WHERE
         street = '3418 Nulla Avenue'
     )
@@ -276,7 +270,7 @@ VALUES
       SELECT
         id
       FROM
-        addresses
+        address
       WHERE
         street = 'Ap #941-9878 Aenean Rd.'
     )
@@ -292,7 +286,7 @@ VALUES
       SELECT
         id
       FROM
-        addresses
+        address
       WHERE
         street = 'Ap #452-4803 Mus. St.'
     )
@@ -308,7 +302,7 @@ VALUES
       SELECT
         id
       FROM
-        addresses
+        address
       WHERE
         street = '393 Ligula. Street'
     )
@@ -324,7 +318,7 @@ VALUES
       SELECT
         id
       FROM
-        addresses
+        address
       WHERE
         street = '5113 Id Road'
     )
@@ -340,14 +334,14 @@ VALUES
       SELECT
         id
       FROM
-        addresses
+        address
       WHERE
         street = '201-7469 Amet, Av.'
     )
   );
 -- Instructors
 INSERT INTO
-  instructors (
+  instructor (
     teaches_ensambles,
     employment_id,
     person_id
@@ -360,7 +354,7 @@ VALUES
       SELECT
         id
       FROM
-        persons
+        person
       WHERE
         person_number = 198922168269
     )
@@ -372,21 +366,21 @@ VALUES
       SELECT
         id
       FROM
-        persons
+        person
       WHERE
         person_number = 196912026969
     )
   );
 -- Parents
 INSERT INTO
-  parents (person_id)
+  parent (person_id)
 VALUES
   (
     (
       SELECT
         id
       FROM
-        persons
+        person
       WHERE
         person_number = 197349179540
     )
@@ -396,7 +390,7 @@ VALUES
       SELECT
         id
       FROM
-        persons
+        person
       WHERE
         person_number = 196164739316
     )
@@ -406,7 +400,7 @@ VALUES
       SELECT
         id
       FROM
-        persons
+        person
       WHERE
         person_number = 201243299178
     )
@@ -416,7 +410,7 @@ VALUES
       SELECT
         id
       FROM
-        persons
+        person
       WHERE
         person_number = 198582732654
     )
@@ -426,7 +420,7 @@ VALUES
       SELECT
         id
       FROM
-        persons
+        person
       WHERE
         person_number = 199117329906
     )
@@ -436,14 +430,14 @@ VALUES
       SELECT
         id
       FROM
-        persons
+        person
       WHERE
         person_number = 201423094880
     )
   );
 -- Students
 INSERT INTO
-  students (
+  student (
     instrument_quota,
     person_id,
     parent_id,
@@ -456,7 +450,7 @@ VALUES
       SELECT
         id
       FROM
-        persons
+        person
       WHERE
         person_number = 197275573864
     ),
@@ -464,13 +458,13 @@ VALUES
       SELECT
         id
       FROM
-        parents
+        parent
       WHERE
         person_id = (
           SELECT
             id
           FROM
-            persons
+            person
           WHERE
             person_number = 201423094880
         )
@@ -483,7 +477,7 @@ VALUES
       SELECT
         id
       FROM
-        persons
+        person
       WHERE
         person_number = 195819737313
     ),
@@ -491,13 +485,13 @@ VALUES
       SELECT
         id
       FROM
-        parents
+        parent
       WHERE
         person_id = (
           SELECT
             id
           FROM
-            persons
+            person
           WHERE
             person_number = 197349179540
         )
@@ -510,7 +504,7 @@ VALUES
       SELECT
         id
       FROM
-        persons
+        person
       WHERE
         person_number = 195367418395
     ),
@@ -518,13 +512,13 @@ VALUES
       SELECT
         id
       FROM
-        parents
+        parent
       WHERE
         person_id = (
           SELECT
             id
           FROM
-            persons
+            person
           WHERE
             person_number = 197349179540
         )
@@ -537,7 +531,7 @@ VALUES
       SELECT
         id
       FROM
-        persons
+        person
       WHERE
         person_number = 196163772791
     ),
@@ -545,13 +539,13 @@ VALUES
       SELECT
         id
       FROM
-        parents
+        parent
       WHERE
         person_id = (
           SELECT
             id
           FROM
-            persons
+            person
           WHERE
             person_number = 201243299178
         )
@@ -564,7 +558,7 @@ VALUES
       SELECT
         id
       FROM
-        persons
+        person
       WHERE
         person_number = 199839379376
     ),
@@ -572,13 +566,13 @@ VALUES
       SELECT
         id
       FROM
-        parents
+        parent
       WHERE
         person_id = (
           SELECT
             id
           FROM
-            persons
+            person
           WHERE
             person_number = 197349179540
         )
@@ -591,7 +585,7 @@ VALUES
       SELECT
         id
       FROM
-        persons
+        person
       WHERE
         person_number = 199266807638
     ),
@@ -599,13 +593,13 @@ VALUES
       SELECT
         id
       FROM
-        parents
+        parent
       WHERE
         person_id = (
           SELECT
             id
           FROM
-            persons
+            person
           WHERE
             person_number = 196164739316
         )
@@ -618,7 +612,7 @@ VALUES
       SELECT
         id
       FROM
-        persons
+        person
       WHERE
         person_number = 199938380350
     ),
@@ -626,13 +620,13 @@ VALUES
       SELECT
         id
       FROM
-        parents
+        parent
       WHERE
         person_id = (
           SELECT
             id
           FROM
-            persons
+            person
           WHERE
             person_number = 198582732654
         )
@@ -645,7 +639,7 @@ VALUES
       SELECT
         id
       FROM
-        persons
+        person
       WHERE
         person_number = 198617719937
     ),
@@ -653,13 +647,13 @@ VALUES
       SELECT
         id
       FROM
-        parents
+        parent
       WHERE
         person_id = (
           SELECT
             id
           FROM
-            persons
+            person
           WHERE
             person_number = 199117329906
         )
@@ -671,7 +665,7 @@ VALUES
   -- ------------------------------------------------------------------------------
   -- Instrument Types
 INSERT INTO
-  instrument_types (type, instructor_id)
+  instrument_type (type, instructor_id)
 VALUES
   (
     'piano',
@@ -679,7 +673,7 @@ VALUES
       SELECT
         id
       FROM
-        instructors
+        instructor
       WHERE
         employment_id = 1
     )
@@ -690,7 +684,7 @@ VALUES
       SELECT
         id
       FROM
-        instructors
+        instructor
       WHERE
         employment_id = 1
     )
@@ -701,7 +695,7 @@ VALUES
       SELECT
         id
       FROM
-        instructors
+        instructor
       WHERE
         employment_id = 1
     )
@@ -712,7 +706,7 @@ VALUES
       SELECT
         id
       FROM
-        instructors
+        instructor
       WHERE
         employment_id = 1
     )
@@ -723,7 +717,7 @@ VALUES
       SELECT
         id
       FROM
-        instructors
+        instructor
       WHERE
         employment_id = 2
     )
@@ -734,7 +728,7 @@ VALUES
       SELECT
         id
       FROM
-        instructors
+        instructor
       WHERE
         employment_id = 2
     )
@@ -745,19 +739,19 @@ VALUES
       SELECT
         id
       FROM
-        instructors
+        instructor
       WHERE
         employment_id = 2
     )
   );
 INSERT INTO
-  instrument_types (type)
+  instrument_type (type)
 VALUES
   ('bagpipe'),
   ('trumpet');
 -- Genres
 INSERT INTO
-  genres (genre, instructor_id)
+  genre (genre, instructor_id)
 VALUES
   (
     'rock',
@@ -765,7 +759,7 @@ VALUES
       SELECT
         id
       FROM
-        instructors
+        instructor
       WHERE
         employment_id = 1
     )
@@ -776,7 +770,7 @@ VALUES
       SELECT
         id
       FROM
-        instructors
+        instructor
       WHERE
         employment_id = 1
     )
@@ -787,7 +781,7 @@ VALUES
       SELECT
         id
       FROM
-        instructors
+        instructor
       WHERE
         employment_id = 2
     )
@@ -798,7 +792,7 @@ VALUES
       SELECT
         id
       FROM
-        instructors
+        instructor
       WHERE
         employment_id = 2
     )
@@ -821,7 +815,7 @@ VALUES
       SELECT
         id
       FROM
-        instrument_types
+        instrument_type
       WHERE
         type = 'piano'
     ),
@@ -835,7 +829,7 @@ VALUES
       SELECT
         id
       FROM
-        instrument_types
+        instrument_type
       WHERE
         type = 'bass'
     ),
@@ -849,7 +843,7 @@ VALUES
       SELECT
         id
       FROM
-        instrument_types
+        instrument_type
       WHERE
         type = 'guitar'
     ),
@@ -863,7 +857,7 @@ VALUES
       SELECT
         id
       FROM
-        instrument_types
+        instrument_type
       WHERE
         type = 'cello'
     ),
@@ -877,7 +871,7 @@ VALUES
       SELECT
         id
       FROM
-        instrument_types
+        instrument_type
       WHERE
         type = 'drums'
     ),
@@ -891,7 +885,7 @@ VALUES
       SELECT
         id
       FROM
-        instrument_types
+        instrument_type
       WHERE
         type = 'violin'
     ),
@@ -905,7 +899,7 @@ VALUES
       SELECT
         id
       FROM
-        instrument_types
+        instrument_type
       WHERE
         type = 'saxophone'
     ),
@@ -919,7 +913,7 @@ VALUES
       SELECT
         id
       FROM
-        instrument_types
+        instrument_type
       WHERE
         type = 'bagpipe'
     ),
@@ -933,7 +927,7 @@ VALUES
       SELECT
         id
       FROM
-        instrument_types
+        instrument_type
       WHERE
         type = 'trumpet'
     ),
@@ -942,7 +936,6 @@ VALUES
 -- Pricing scheme
 INSERT INTO
   pricing_scheme (
-    sgms_id,
     group_lesson_price,
     ensemble_lesson_price,
     individual_lesson_price,
@@ -953,21 +946,6 @@ INSERT INTO
   )
 VALUES
   (
-    (
-      SELECT
-        id
-      FROM
-        sound_good_music_school
-      WHERE
-        address_id = (
-          SELECT
-            id
-          FROM
-            addresses
-          WHERE
-            street = 'Ap #865-9831 Lacus. Avenue'
-        )
-    ),
     110.00,
     150.00,
     220.00,
@@ -976,335 +954,126 @@ VALUES
     50.00,
     0.75
   );
+-- Music lesson
+INSERT INTO 
+music_lesson(
+time_start,
+time_end,
+skill_level,
+instructor_id
+)
+VALUES
+('2023-01-17 14:00', '2023-01-17 15:00', 'beginner', (SELECT id FROM instructor WHERE employment_id = 1)),
+('2023-01-17 15:00', '2023-01-17 16:00', 'beginner', (SELECT id FROM instructor WHERE employment_id = 1)),
+('2023-01-17 16:00', '2023-01-17 17:00', 'intermediate', (SELECT id FROM instructor WHERE employment_id = 1)),
+('2023-01-17 17:00', '2023-01-17 18:00', 'advanced', (SELECT id FROM instructor WHERE employment_id = 1)),
+('2023-01-17 14:00', '2023-01-17 15:00', 'beginner', (SELECT id FROM instructor WHERE employment_id = 2)),
+('2023-01-17 15:00', '2023-01-17 16:00', 'beginner', (SELECT id FROM instructor WHERE employment_id = 2)),
+('2023-01-17 16:00', '2023-01-17 17:00', 'intermediate', (SELECT id FROM instructor WHERE employment_id = 2)),
+('2023-01-17 17:00', '2023-01-17 18:00', 'advanced', (SELECT id FROM instructor WHERE employment_id = 2)),
+
+('2023-01-18 14:00', '2023-01-18 15:00', 'beginner', (SELECT id FROM instructor WHERE employment_id = 1)),
+('2023-01-18 15:00', '2023-01-18 16:00', 'beginner', (SELECT id FROM instructor WHERE employment_id = 1)),
+('2023-01-18 16:00', '2023-01-18 17:00', 'intermediate', (SELECT id FROM instructor WHERE employment_id = 1)),
+('2023-01-18 17:00', '2023-01-18 18:00', 'advanced', (SELECT id FROM instructor WHERE employment_id = 1)),
+('2023-01-18 14:00', '2023-01-18 15:00', 'beginner', (SELECT id FROM instructor WHERE employment_id = 2)),
+('2023-01-18 15:00', '2023-01-18 16:00', 'beginner', (SELECT id FROM instructor WHERE employment_id = 2)),
+('2023-01-18 16:00', '2023-01-18 17:00', 'intermediate', (SELECT id FROM instructor WHERE employment_id = 2)),
+('2023-01-18 17:00', '2023-01-18 18:00', 'advanced', (SELECT id FROM instructor WHERE employment_id = 2)),
+
+('2023-01-19 14:00', '2023-01-19 15:00', 'beginner', (SELECT id FROM instructor WHERE employment_id = 1)),
+('2023-01-19 15:00', '2023-01-19 16:00', 'beginner', (SELECT id FROM instructor WHERE employment_id = 1)),
+('2023-01-19 16:00', '2023-01-19 17:00', 'intermediate', (SELECT id FROM instructor WHERE employment_id = 1)),
+('2023-01-19 17:00', '2023-01-19 18:00', 'advanced', (SELECT id FROM instructor WHERE employment_id = 1)),
+('2023-01-19 14:00', '2023-01-19 15:00', 'beginner', (SELECT id FROM instructor WHERE employment_id = 2)),
+('2023-01-19 15:00', '2023-01-19 16:00', 'beginner', (SELECT id FROM instructor WHERE employment_id = 2)),
+('2023-01-19 16:00', '2023-01-19 17:00', 'intermediate', (SELECT id FROM instructor WHERE employment_id = 2)),
+('2023-01-19 17:00', '2023-01-19 18:00', 'advanced', (SELECT id FROM instructor WHERE employment_id = 2));
 
 -- Bookings
 INSERT INTO
-  bookings (
-    instructor_id,
-    student_id,
-    lesson_type,
+  booking (
     time_start,
-    time_end
+    time_end,
+    music_lesson_id,
+    student_id
   )
 VALUES
-((SELECT id FROM instructors WHERE employment_id = 1),
-(SELECT id FROM students WHERE person_id = (SELECT id FROM persons WHERE person_number = 197275573864)),
-'individual',
-'2023-01-17 14:00', 
-'2023-01-17 16:00'
-),
-((SELECT id FROM instructors WHERE employment_id = 1),
-(SELECT id FROM students WHERE person_id = (SELECT id FROM persons WHERE person_number = 195819737313)),
-'individual',
-'2023-01-17 12:30',
-'2023-01-17 14:00'
-),
-((SELECT id FROM instructors WHERE employment_id = 1),
-(SELECT id FROM students WHERE person_id = (SELECT id FROM persons where person_number = 195367418395)),
-'individual',
-'2023-01-18 09:00',
-'2023-01-18 10:00'
-),
-((SELECT id FROM instructors WHERE employment_id =1),
-(SELECT id FROM students where person_id = (SELECT id FROM persons WHERE person_number = 196163772791)),
-'individual',
-'2023-01-19 15:00',
-'2023-01-19 18:00'
-),
-((SELECT id FROM instructors WHERE employment_id = 1),
-(SELECT id FROM students WHERE person_id = (SELECT id FROM persons WHERE person_number = 198617719937)),
-'individual',
-'2023-01-24 15:00',
-'2023-01-24 18:00'
-),
-((SELECT id FROM instructors WHERE employment_id = 1),
-(SELECT id FROM students WHERE person_id = (SELECT id FROM persons WHERE person_number = 197275573864)),
-'individual',
-'2023-01-25 14:00',
-'2023-01-25 16:00'
-),
-((SELECT id FROM instructors WHERE employment_id = 2),
-(SELECT id FROM students where person_id = (SELECT id FROM persons WHERE person_number = 196163772791)),
-'group',
-'2023-01-18 13:00',
-'2023-01-18 17:00'
-),
-((SELECT id FROM instructors WHERE employment_id = 2),
-(SELECT id FROM students WHERE person_id = (SELECT id FROM persons WHERE person_number = 199938380350)),
-'group',
-'2023-01-18 13:00',
-'2023-01-18 17:00'
-),
-((SELECT id FROM instructors WHERE employment_id = 2),
-(SELECT id FROM students WHERE person_id = (SELECT id FROM persons WHERE person_number = 199839379376)),
-'group',
-'2023-01-18 13:00',
-'2023-01-18 17:00'
-),
-((SELECT id FROM instructors WHERE teaches_ensambles = TRUE),
-(SELECT id FROM students WHERE person_id = (SELECT id FROM persons WHERE person_number = 197275573864)),
-'ensemble',
-'2023-01-23 15:00',
-'2023-01-23 18:00'
-),
-((SELECT id FROM instructors WHERE teaches_ensambles = TRUE),
-(SELECT id FROM students WHERE person_id = (SELECT id FROM persons WHERE person_number = 195819737313)),
-'ensemble',
-'2023-01-23 15:00',
-'2023-01-23 18:00'
-),
-((SELECT id FROM instructors WHERE teaches_ensambles = TRUE),
-(SELECT id FROM students WHERE person_id = (SELECT id FROM persons WHERE person_number = 199266807638)),
-'ensemble',
-'2023-01-23 15:00',
-'2023-01-23 18:00'
-),
-((SELECT id FROM instructors WHERE teaches_ensambles = TRUE),
-(SELECT id FROM students WHERE person_id = (SELECT id FROM persons WHERE person_number = 199839379376)),
-'ensemble',
-'2023-01-26 15:00',
-'2023-01-26 18:00'
-),
-((SELECT id FROM instructors WHERE teaches_ensambles = TRUE),
-(SELECT id FROM students WHERE person_id = (SELECT id FROM persons WHERE person_number = 195367418395)),
-'ensemble',
-'2023-01-26 15:00',
-'2023-01-26 18:00'
-);
+('2023-01-17 14:00', 
+'2023-01-17 15:00', 
+(SELECT id FROM music_lesson WHERE time_start = '2023-01-17 14:00' AND skill_level = 'beginner' AND instructor_id = (SELECT id FROM instructor where employment_id = 1)),
+(SELECT id FROM student WHERE person_id = (SELECT id FROM person WHERE person_number = 197275573864))),
 
--- Music lessons
-INSERT INTO
-  music_lessons (
-  lesson_type,
-  room_number,
-  instructor_id,
-  time_start,
-  time_end,
-  numb_of_participants
-  )
-VALUES
-('individual',
-'A201',
-(SELECT id FROM instructors WHERE employment_id = 1),
-'2023-01-17 14:00', 
-'2023-01-17 16:00',
-1
-),
-('individual',
-'A201',
-(SELECT id FROM instructors WHERE employment_id = 1),
-'2023-01-17 12:30',
-'2023-01-17 14:00',
-1
-),
-('individual',
-'A201',
-(SELECT id FROM instructors WHERE employment_id = 1),
-'2023-01-18 09:00',
-'2023-01-18 10:00',
-1
-),
-('individual',
-'A201',
-(SELECT id  FROM instructors WHERE employment_id = 1),
-'2023-01-19 15:00',
-'2023-01-19 18:00',
-1
-),
-('individual',
-'A201',
-(SELECT id FROM instructors WHERE employment_id = 1),
-'2023-01-24 15:00',
-'2023-01-24 18:00',
-1
-),
-('individual',
-'A201',
-(SELECT id FROM instructors WHERE employment_id = 1),
-'2023-01-25 14:00',
-'2023-01-25 16:00',
-1
-),
-('group',
-'A202',
-(SELECT id FROM instructors WHERE employment_id = 2),
-'2023-01-18 13:00',
-'2023-01-18 17:00',
-3
-),
-('ensemble',
-'A202',
-(SELECT id FROM instructors WHERE teaches_ensambles = TRUE),
-'2023-01-23 15:00',
-'2023-01-23 18:00',
-3
-),
-('ensemble',
-'A202',
-(SELECT id FROM instructors WHERE teaches_ensambles = TRUE),
-'2023-01-26 15:00',
-'2023-01-26 18:00',
-2
-);
--- Some music lessons that aren't booked yet
-INSERT INTO
-  music_lessons (
-  lesson_type,
-  room_number,
-  instructor_id,
-  time_start,
-  time_end
-  )
-VALUES
-('group',
-'A202',
-(SELECT id FROM instructors WHERE employment_id = 2),
-'2023-01-24 15:00',
-'2023-01-24 18:00'
-),
-('group',
-'A202',
-(SELECT id FROM instructors WHERE employment_id = 1),
-'2023-01-22 15:00',
-'2023-01-22 18:00'
-),
-('group',
-'A202',
-(SELECT id from instructors WHERE employment_id = 1),
-'2023-01-23 13:00',
-'2023-01-23 15:00'
-),
-('ensemble',
-'A202',
-(SELECT id FROM instructors WHERE employment_id = 2),
-'2023-01-22 13:00',
-'2023-01-22 15:00'
-),
-('ensemble',
-'A202',
-(SELECT id FROM instructors WHERE employment_id = 2),
-'2023-01-25 15:00',
-'2023-01-25 18:00'
-),
-('ensemble',
-'A202',
-(SELECT id FROM instructors WHERE employment_id = 2),
-'2023-01-27 15:00',
-'2023-01-27 18:00'
-);
+('2023-01-17 14:00', 
+'2023-01-17 15:00', 
+(SELECT id FROM music_lesson WHERE time_start = '2023-01-17 14:00' AND skill_level = 'beginner' AND instructor_id = (SELECT id FROM instructor where employment_id = 1)),
+(SELECT id FROM student WHERE person_id = (SELECT id FROM person WHERE person_number = 195819737313))),
+
+('2023-01-17 15:00', 
+'2023-01-17 16:00', 
+(SELECT id FROM music_lesson WHERE time_start = '2023-01-17 15:00' AND skill_level = 'beginner' AND instructor_id = (SELECT id FROM instructor where employment_id = 2)),
+(SELECT id FROM student WHERE person_id = (SELECT id FROM person WHERE person_number = 199266807638))),
+
+('2023-01-17 16:00', 
+'2023-01-17 17:00', 
+(SELECT id FROM music_lesson WHERE time_start = '2023-01-17 16:00' AND skill_level = 'intermediate' AND instructor_id = (SELECT id FROM instructor where employment_id = 2)),
+(SELECT id FROM student WHERE person_id = (SELECT id FROM person WHERE person_number = 195367418395))),
+
+('2023-01-17 16:00', 
+'2023-01-17 17:00', 
+(SELECT id FROM music_lesson WHERE time_start = '2023-01-17 16:00' AND skill_level = 'intermediate' AND instructor_id = (SELECT id FROM instructor where employment_id = 2)),
+(SELECT id FROM student WHERE person_id = (SELECT id FROM person WHERE person_number = 199839379376))),
+
+('2023-01-17 17:00', 
+'2023-01-17 18:00', 
+(SELECT id FROM music_lesson WHERE time_start = '2023-01-17 17:00' AND skill_level = 'advanced' AND instructor_id = (SELECT id FROM instructor where employment_id = 1)),
+(SELECT id FROM student WHERE person_id = (SELECT id FROM person WHERE person_number = 196163772791))),
+
+('2023-01-17 17:00', 
+'2023-01-17 18:00', 
+(SELECT id FROM music_lesson WHERE time_start = '2023-01-17 17:00' AND skill_level = 'advanced' AND instructor_id = (SELECT id FROM instructor where employment_id = 1)),
+(SELECT id FROM student WHERE person_id = (SELECT id FROM person WHERE person_number = 199938380350))),
+
+('2023-01-17 16:00', 
+'2023-01-17 17:00', 
+(SELECT id FROM music_lesson WHERE time_start = '2023-01-17 16:00' AND skill_level = 'intermediate' AND instructor_id = (SELECT id FROM instructor where employment_id = 2)),
+(SELECT id FROM student WHERE person_id = (SELECT id FROM person WHERE person_number = 198617719937))),
+
+('2023-01-18 14:00', 
+'2023-01-18 15:00', 
+(SELECT id FROM music_lesson WHERE time_start = '2023-01-18 14:00' AND skill_level = 'beginner' AND instructor_id = (SELECT id FROM instructor where employment_id = 1)),
+(SELECT id FROM student WHERE person_id = (SELECT id FROM person WHERE person_number = 197275573864)));
 
 -- Individual Lessons 
 INSERT INTO 
     individual_lesson(
-    lesson_id,
-    student_id,
-    skill_level,
-    instrument_type
+    music_lesson_id,
+    instrument_type_id
     )
 VALUES
-    ((SELECT id FROM music_lessons WHERE time_start = '2023-01-17 14:00:00' AND room_number = 'A201'),
-    (SELECT id FROM students WHERE person_id = (SELECT id FROM persons WHERE person_number = 197275573864)),
-    'beginner',
-    'piano'
-    ),
-    ((SELECT id FROM music_lessons WHERE time_start = '2023-01-17 12:30:00' AND room_number = 'A201'),
-    (SELECT id FROM students WHERE person_id = (SELECT id FROM persons WHERE person_number = 195819737313)),
-    'beginner',
-    'guitar'
-    ),
-    ((SELECT id FROM music_lessons WHERE time_start = '2023-01-18 09:00:00' AND room_number = 'A201'),
-    (SELECT id FROM students WHERE person_id = (SELECT id FROM persons where person_number = 195367418395)),
-    'intermediate',
-    'cello'
-    ),
-    ((SELECT id FROM music_lessons WHERE time_start = '2023-01-19 15:00:00' AND room_number = 'A201'),
-    (SELECT id FROM students where person_id = (SELECT id FROM persons WHERE person_number = 196163772791)),
-    'advanced',
-    'bass'
-    ),
-    ((SELECT id FROM music_lessons WHERE time_start = '2023-01-24 15:00:00' AND room_number = 'A201'),
-    (SELECT id FROM students WHERE person_id = (SELECT id FROM persons WHERE person_number = 198617719937)),
-    'intermediate',
-    'cello'
-    ),
-    ((SELECT id FROM music_lessons WHERE time_start = '2023-01-25 14:00:00' AND room_number = 'A201'),
-    (SELECT id FROM students WHERE person_id = (SELECT id FROM persons WHERE person_number = 197275573864)),
-    'intermediate',
-    'piano'
-    );
+((SELECT id FROM music_lesson WHERE time_start = '2023-01-18 14:00:00' AND instructor_id = 1),(SELECT id FROM instrument_type WHERE type = 'piano')),
+((SELECT id FROM music_lesson WHERE time_start = '2023-01-17 15:00:00' AND instructor_id = 2),(SELECT id FROM instrument_type WHERE type = 'violin'));
+
 
 -- Group Lessons 
 INSERT INTO
-  group_lessons (
-    lesson_id,
+  group_lesson (
+    music_lesson_id,
     minimum_number_of_students,
     maximum_number_of_students,
-    skill_level,
-    instrument_type
+    instrument_type_id
   )
 VALUES
-    ((SELECT id FROM music_lessons WHERE time_start = '2023-01-18 13:00:00' AND room_number = 'A202'),
-    2,
-    4,
-    'advanced',
-    'violin'
-    ),
-    ((SELECT id FROM music_lessons WHERE time_start = '2023-01-24 15:00:00' AND room_number = 'A202'),
-    2,
-    4,
-    'beginner',
-    'saxophone'
-    ),
-    ((SELECT id FROM music_lessons WHERE time_start = '2023-01-22 15:00:00' AND room_number = 'A202'),
-    2,
-    4,
-    'intermediate',
-    'guitar'
-    ),
-    ((SELECT id FROM music_lessons WHERE time_start = '2023-01-23 13:00:00' AND room_number = 'A202'),
-    2,
-    4,
-    'intermediate',
-    'bass'
-    );
+    ((SELECT id FROM music_lesson WHERE time_start = '2023-01-17 14:00:00' AND instructor_id = 1), 2, 4, (SELECT id FROM instrument_type WHERE type = 'piano')), -- 2 students
+    ((SELECT id FROM music_lesson WHERE time_start = '2023-01-17 17:00:00' AND instructor_id = 1), 2, 4, (SELECT id FROM instrument_type WHERE type = 'piano')); -- 2 students
 
 -- ensemble
 INSERT INTO
   ensemble (
-    lesson_id,
+    music_lesson_id,
     minimum_number_of_students,
     maximum_number_of_students,
-    skill_level,
-    genre
+    genre_id
   )
 VALUES
-    ((SELECT id FROM music_lessons WHERE time_start = '2023-01-23 15:00:00' AND room_number = 'A202'),
-    4, 
-    12,
-    'beginner',
-    'jazz'
-    ),
-    ((SELECT id FROM music_lessons WHERE time_start = '2023-01-26 15:00:00' AND room_number = 'A202'),
-    4,
-    12,
-    'intermediate',
-    'classical'
-    ),
-    ((SELECT id FROM music_lessons WHERE time_start = '2023-01-22 13:00:00' AND room_number = 'A202'),
-    4,
-    12,
-    'advanced',
-    'jazz'
-    ),
-    ((SELECT id FROM music_lessons WHERE time_start = '2023-01-25 15:00:00' AND room_number = 'A202'),
-    4,
-    12,
-    'advanced',
-    'classical'
-    ),
-    ((SELECT id FROM music_lessons WHERE time_start = '2023-01-27 15:00:00' AND room_number = 'A202'),
-    4,
-    12,
-    'intermediate',
-    'jazz'
-    );
+    ((SELECT id FROM music_lesson WHERE time_start = '2023-01-17 16:00:00' AND instructor_id = 2), 3, 12, (SELECT id FROM genre WHERE genre = 'jazz')); -- 3 students
