@@ -56,6 +56,7 @@ CREATE TABLE music_lesson (
     time_end TIMESTAMP NOT NULL,
     skill_level ENUM('beginner', 'intermediate', 'advanced') NOT NULL,
     instructor_id INT NOT NULL,
+    lesson_type ENUM('individual', 'group', 'ensemble') NOT NULL,
     FOREIGN KEY (instructor_id) REFERENCES instructor(id),
     UNIQUE KEY lesson_unique (time_start, instructor_id)
 );
@@ -156,6 +157,29 @@ BEGIN
     ) THEN
         SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Overlapping lesson detected';
     END IF;
+    IF EXISTS (
+        SELECT 1
+        FROM individual_lesson
+        WHERE music_lesson_id = NEW.music_lesson_id
+    ) THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'This individual lesson is already booked';
+    END IF;
+      IF (
+        SELECT COUNT(*)
+        FROM booking
+        JOIN group_lesson ON booking.music_lesson_id = group_lesson.music_lesson_id
+        WHERE booking.music_lesson_id = NEW.music_lesson_id
+    ) >= 4 THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'This group lesson is fully booked';
+    END IF;
+    IF (
+        SELECT COUNT(*)
+        FROM booking
+        JOIN ensemble ON booking.music_lesson_id = ensemble.music_lesson_id
+        WHERE booking.music_lesson_id = NEW.music_lesson_id
+    ) >= 12 THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'This ensemble lesson is fully booked';
+    END IF;
 END//
 CREATE TRIGGER before_update_booking
 BEFORE UPDATE ON booking
@@ -170,6 +194,29 @@ BEGIN
     ) THEN
         SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Overlapping lesson detected';
     END IF;
+    IF EXISTS (
+        SELECT 1
+        FROM individual_lesson
+        WHERE music_lesson_id = NEW.music_lesson_id
+    ) THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'This individual lesson is already booked';
+    END IF;
+    IF (
+        SELECT COUNT(*)
+        FROM booking
+        JOIN group_lesson ON booking.music_lesson_id = group_lesson.music_lesson_id
+        WHERE booking.music_lesson_id = NEW.music_lesson_id
+    ) >= 4 THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'This group lesson is fully booked';
+    END IF;
+    IF (
+        SELECT COUNT(*)
+        FROM booking
+        JOIN ensemble ON booking.music_lesson_id = ensemble.music_lesson_id
+        WHERE booking.music_lesson_id = NEW.music_lesson_id
+    ) >= 12 THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'This ensemble lesson is fully booked';
+    END IF;
 END//
 DELIMITER ;
 CREATE TABLE genre (
@@ -180,8 +227,8 @@ CREATE TABLE genre (
 );
 CREATE TABLE ensemble (
     music_lesson_id INT NOT NULL,
-    minimum_number_of_students INT NOT NULL,
-    maximum_number_of_students INT NOT NULL,
+    minimum_number_of_students INT NOT NULL DEFAULT 3,
+    maximum_number_of_students INT NOT NULL DEFAULT 12,
     genre_id INT NOT NULL,
     FOREIGN KEY (genre_id) REFERENCES genre(id),
     FOREIGN KEY (music_lesson_id) REFERENCES music_lesson(id)
@@ -238,8 +285,8 @@ DELIMITER ;
 -- ------------------------------------
 CREATE TABLE group_lesson (
     music_lesson_id INT NOT NULL,
-    minimum_number_of_students INT NOT NULL,
-    maximum_number_of_students INT NOT NULL,
+    minimum_number_of_students INT NOT NULL DEFAULT 2,
+    maximum_number_of_students INT NOT NULL DEFAULT 4,
     instrument_type_id INT NOT NULL,
     FOREIGN KEY (instrument_type_id) REFERENCES instrument_type(id),
     FOREIGN KEY (music_lesson_id) REFERENCES music_lesson(id)
