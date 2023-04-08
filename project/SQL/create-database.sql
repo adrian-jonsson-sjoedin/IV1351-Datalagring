@@ -194,7 +194,48 @@ ADD
   CONSTRAINT ensemble_min_students_positive CHECK (minimum_number_of_students >= 0),
 ADD
   CONSTRAINT ensemble_max_students_positive CHECK (maximum_number_of_students >= 0);
-
+ -- TRIGGER TO NOT ALLOW A LESSON TO BE LINKED TO MORE THAN ONE LESSON TYPE 
+DELIMITER //
+CREATE TRIGGER before_insert_ensemble
+BEFORE INSERT ON ensemble
+FOR EACH ROW
+BEGIN
+    IF EXISTS (
+        SELECT 1
+        FROM individual_lesson
+        WHERE music_lesson_id = NEW.music_lesson_id
+    ) THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Music lesson is already linked to an individual lesson';
+    END IF;
+    
+    IF EXISTS (
+        SELECT 1
+        FROM group_lesson
+        WHERE music_lesson_id = NEW.music_lesson_id
+    ) THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Music lesson is already linked to a group lesson';
+    END IF;
+END//
+CREATE TRIGGER before_update_ensemble
+BEFORE UPDATE ON ensemble
+FOR EACH ROW
+BEGIN
+    IF EXISTS (
+        SELECT 1
+        FROM (
+            SELECT music_lesson_id
+            FROM individual_lesson
+            UNION ALL
+            SELECT music_lesson_id
+            FROM group_lesson
+        ) AS other_tables
+        WHERE other_tables.music_lesson_id = NEW.music_lesson_id
+    ) THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'music_lesson_id already exists in another table';
+    END IF;
+END//
+DELIMITER ;
+-- ------------------------------------
 CREATE TABLE group_lesson (
     music_lesson_id INT NOT NULL,
     minimum_number_of_students INT NOT NULL,
@@ -206,11 +247,53 @@ CREATE TABLE group_lesson (
 ALTER TABLE
   group_lesson
 ADD
-  CONSTRAINT PK_group_lessons PRIMARY KEY (music_lesson_id),
+  CONSTRAINT PK_group_lesson PRIMARY KEY (music_lesson_id),
 ADD
   CONSTRAINT group_min_students_positive CHECK (minimum_number_of_students >= 0),
 ADD
   CONSTRAINT group_max_students_positive CHECK (maximum_number_of_students >= 0);
+-- TRIGGER TO NOT ALLOW A LESSON TO BE LINKED TO MORE THAN ONE LESSON TYPE
+DELIMITER //
+CREATE TRIGGER before_insert_group_lesson
+BEFORE INSERT ON group_lesson
+FOR EACH ROW
+BEGIN
+    IF EXISTS (
+        SELECT 1
+        FROM ensemble
+        WHERE music_lesson_id = NEW.music_lesson_id
+    ) THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Music lesson is already linked to an ensemble';
+    END IF;
+    
+    IF EXISTS (
+        SELECT 1
+        FROM individual_lesson
+        WHERE music_lesson_id = NEW.music_lesson_id
+    ) THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Music lesson is already linked to a individual lesson';
+    END IF;
+END//
+CREATE TRIGGER before_update_group_lesson
+BEFORE UPDATE ON group_lesson
+FOR EACH ROW
+BEGIN
+    IF EXISTS (
+        SELECT 1
+        FROM (
+            SELECT music_lesson_id
+            FROM ensemble
+            UNION ALL
+            SELECT music_lesson_id
+            FROM individual_lesson
+        ) AS other_tables
+        WHERE other_tables.music_lesson_id = NEW.music_lesson_id
+    ) THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'music_lesson_id already exists in another table';
+    END IF;
+END//
+DELIMITER ;
+-- -----------------------------------------------
 CREATE TABLE individual_lesson (
     music_lesson_id INT NOT NULL,
     instrument_type_id INT NOT NULL,
@@ -221,6 +304,48 @@ ALTER TABLE
   individual_lesson
 ADD
   CONSTRAINT PK_individual_lesson PRIMARY KEY (music_lesson_id);
+-- TRIGGER TO NOT ALLOW A LESSON TO BE LINKED TO MORE THAN ONE LESSON TYPE
+DELIMITER //
+CREATE TRIGGER before_insert_individual_lesson
+BEFORE INSERT ON individual_lesson
+FOR EACH ROW
+BEGIN
+    IF EXISTS (
+        SELECT 1
+        FROM ensemble
+        WHERE music_lesson_id = NEW.music_lesson_id
+    ) THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Music lesson is already linked to an ensemble';
+    END IF;
+    
+    IF EXISTS (
+        SELECT 1
+        FROM group_lesson
+        WHERE music_lesson_id = NEW.music_lesson_id
+    ) THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Music lesson is already linked to a group lesson';
+    END IF;
+END//
+CREATE TRIGGER before_update_individual_lesson
+BEFORE UPDATE ON individual_lesson
+FOR EACH ROW
+BEGIN
+    IF EXISTS (
+        SELECT 1
+        FROM (
+            SELECT music_lesson_id
+            FROM ensemble
+            UNION ALL
+            SELECT music_lesson_id
+            FROM group_lesson
+        ) AS other_tables
+        WHERE other_tables.music_lesson_id = NEW.music_lesson_id
+    ) THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'music_lesson_id already exists in another table';
+    END IF;
+END//
+DELIMITER ;
+-- -------------------------------------------------------------------
 CREATE TABLE instrument_inventory (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     total_quantity INT NOT NULL,
