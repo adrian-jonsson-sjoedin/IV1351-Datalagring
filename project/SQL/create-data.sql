@@ -960,35 +960,36 @@ music_lesson(
 time_start,
 time_end,
 skill_level,
-instructor_id
+instructor_id,
+lesson_type
 )
 VALUES
-('2023-01-17 14:00', '2023-01-17 15:00', 'beginner', (SELECT id FROM instructor WHERE employment_id = 1)),
-('2023-01-17 15:00', '2023-01-17 16:00', 'beginner', (SELECT id FROM instructor WHERE employment_id = 1)),
-('2023-01-17 16:00', '2023-01-17 17:00', 'intermediate', (SELECT id FROM instructor WHERE employment_id = 1)),
-('2023-01-17 17:00', '2023-01-17 18:00', 'advanced', (SELECT id FROM instructor WHERE employment_id = 1)),
-('2023-01-17 14:00', '2023-01-17 15:00', 'beginner', (SELECT id FROM instructor WHERE employment_id = 2)),
-('2023-01-17 15:00', '2023-01-17 16:00', 'beginner', (SELECT id FROM instructor WHERE employment_id = 2)),
-('2023-01-17 16:00', '2023-01-17 17:00', 'intermediate', (SELECT id FROM instructor WHERE employment_id = 2)),
-('2023-01-17 17:00', '2023-01-17 18:00', 'advanced', (SELECT id FROM instructor WHERE employment_id = 2)),
+('2023-01-17 14:00', '2023-01-17 15:00', 'beginner', (SELECT id FROM instructor WHERE employment_id = 1), 'individual'),
+('2023-01-17 15:00', '2023-01-17 16:00', 'beginner', (SELECT id FROM instructor WHERE employment_id = 1), 'individual'),
+('2023-01-17 16:00', '2023-01-17 17:00', 'intermediate', (SELECT id FROM instructor WHERE employment_id = 1), 'individual'),
+('2023-01-17 17:00', '2023-01-17 18:00', 'advanced', (SELECT id FROM instructor WHERE employment_id = 1), 'individual'),
+('2023-01-17 14:00', '2023-01-17 15:00', 'beginner', (SELECT id FROM instructor WHERE employment_id = 2), 'group'),
+('2023-01-17 15:00', '2023-01-17 16:00', 'beginner', (SELECT id FROM instructor WHERE employment_id = 2), 'group'),
+('2023-01-17 16:00', '2023-01-17 17:00', 'intermediate', (SELECT id FROM instructor WHERE employment_id = 2), 'ensemble'),
+('2023-01-17 17:00', '2023-01-17 18:00', 'advanced', (SELECT id FROM instructor WHERE employment_id = 2), 'ensemble'),
 
-('2023-01-18 14:00', '2023-01-18 15:00', 'beginner', (SELECT id FROM instructor WHERE employment_id = 1)),
-('2023-01-18 15:00', '2023-01-18 16:00', 'beginner', (SELECT id FROM instructor WHERE employment_id = 1)),
-('2023-01-18 16:00', '2023-01-18 17:00', 'intermediate', (SELECT id FROM instructor WHERE employment_id = 1)),
-('2023-01-18 17:00', '2023-01-18 18:00', 'advanced', (SELECT id FROM instructor WHERE employment_id = 1)),
-('2023-01-18 14:00', '2023-01-18 15:00', 'beginner', (SELECT id FROM instructor WHERE employment_id = 2)),
-('2023-01-18 15:00', '2023-01-18 16:00', 'beginner', (SELECT id FROM instructor WHERE employment_id = 2)),
-('2023-01-18 16:00', '2023-01-18 17:00', 'intermediate', (SELECT id FROM instructor WHERE employment_id = 2)),
-('2023-01-18 17:00', '2023-01-18 18:00', 'advanced', (SELECT id FROM instructor WHERE employment_id = 2)),
+('2023-01-18 14:00', '2023-01-18 15:00', 'beginner', (SELECT id FROM instructor WHERE employment_id = 1), 'individual'),
+('2023-01-18 15:00', '2023-01-18 16:00', 'beginner', (SELECT id FROM instructor WHERE employment_id = 1), 'individual'),
+('2023-01-18 16:00', '2023-01-18 17:00', 'intermediate', (SELECT id FROM instructor WHERE employment_id = 1), 'individual'),
+('2023-01-18 17:00', '2023-01-18 18:00', 'advanced', (SELECT id FROM instructor WHERE employment_id = 1), 'individual'),
+('2023-01-18 14:00', '2023-01-18 15:00', 'beginner', (SELECT id FROM instructor WHERE employment_id = 2), 'group'),
+('2023-01-18 15:00', '2023-01-18 16:00', 'beginner', (SELECT id FROM instructor WHERE employment_id = 2), 'group'),
+('2023-01-18 16:00', '2023-01-18 17:00', 'intermediate', (SELECT id FROM instructor WHERE employment_id = 2), 'ensemble'),
+('2023-01-18 17:00', '2023-01-18 18:00', 'advanced', (SELECT id FROM instructor WHERE employment_id = 2), 'ensemble'),
 
-('2023-01-19 14:00', '2023-01-19 15:00', 'beginner', (SELECT id FROM instructor WHERE employment_id = 1)),
-('2023-01-19 15:00', '2023-01-19 16:00', 'beginner', (SELECT id FROM instructor WHERE employment_id = 1)),
-('2023-01-19 16:00', '2023-01-19 17:00', 'intermediate', (SELECT id FROM instructor WHERE employment_id = 1)),
-('2023-01-19 17:00', '2023-01-19 18:00', 'advanced', (SELECT id FROM instructor WHERE employment_id = 1)),
-('2023-01-19 14:00', '2023-01-19 15:00', 'beginner', (SELECT id FROM instructor WHERE employment_id = 2)),
-('2023-01-19 15:00', '2023-01-19 16:00', 'beginner', (SELECT id FROM instructor WHERE employment_id = 2)),
-('2023-01-19 16:00', '2023-01-19 17:00', 'intermediate', (SELECT id FROM instructor WHERE employment_id = 2)),
-('2023-01-19 17:00', '2023-01-19 18:00', 'advanced', (SELECT id FROM instructor WHERE employment_id = 2));
+('2023-01-19 14:00', '2023-01-19 15:00', 'beginner', (SELECT id FROM instructor WHERE employment_id = 1), 'individual'),
+('2023-01-19 15:00', '2023-01-19 16:00', 'beginner', (SELECT id FROM instructor WHERE employment_id = 1), 'individual'),
+('2023-01-19 16:00', '2023-01-19 17:00', 'intermediate', (SELECT id FROM instructor WHERE employment_id = 1), 'individual'),
+('2023-01-19 17:00', '2023-01-19 18:00', 'advanced', (SELECT id FROM instructor WHERE employment_id = 1), 'individual'),
+('2023-01-19 14:00', '2023-01-19 15:00', 'beginner', (SELECT id FROM instructor WHERE employment_id = 2), 'group'),
+('2023-01-19 15:00', '2023-01-19 16:00', 'beginner', (SELECT id FROM instructor WHERE employment_id = 2), 'group'),
+('2023-01-19 16:00', '2023-01-19 17:00', 'intermediate', (SELECT id FROM instructor WHERE employment_id = 2), 'ensemble'),
+('2023-01-19 17:00', '2023-01-19 18:00', 'advanced', (SELECT id FROM instructor WHERE employment_id = 2), 'ensemble');
 
 -- Bookings
 INSERT INTO
@@ -1002,47 +1003,47 @@ VALUES
 ('2023-01-17 14:00', 
 '2023-01-17 15:00', 
 (SELECT id FROM music_lesson WHERE time_start = '2023-01-17 14:00' AND skill_level = 'beginner' AND instructor_id = (SELECT id FROM instructor where employment_id = 1)),
-(SELECT id FROM student WHERE person_id = (SELECT id FROM person WHERE person_number = 197275573864))),
+(SELECT id FROM student WHERE person_id = (SELECT id FROM person WHERE person_number = 197275573864))), -- individual
 
-('2023-01-17 14:00', 
-'2023-01-17 15:00', 
-(SELECT id FROM music_lesson WHERE time_start = '2023-01-17 14:00' AND skill_level = 'beginner' AND instructor_id = (SELECT id FROM instructor where employment_id = 1)),
-(SELECT id FROM student WHERE person_id = (SELECT id FROM person WHERE person_number = 195819737313))),
+('2023-01-17 15:00', 
+'2023-01-17 16:00', 
+(SELECT id FROM music_lesson WHERE time_start = '2023-01-17 15:00' AND skill_level = 'beginner' AND instructor_id = (SELECT id FROM instructor where employment_id = 1)),
+(SELECT id FROM student WHERE person_id = (SELECT id FROM person WHERE person_number = 195819737313))), -- individual
 
 ('2023-01-17 15:00', 
 '2023-01-17 16:00', 
 (SELECT id FROM music_lesson WHERE time_start = '2023-01-17 15:00' AND skill_level = 'beginner' AND instructor_id = (SELECT id FROM instructor where employment_id = 2)),
-(SELECT id FROM student WHERE person_id = (SELECT id FROM person WHERE person_number = 199266807638))),
+(SELECT id FROM student WHERE person_id = (SELECT id FROM person WHERE person_number = 199266807638))), -- group
 
-('2023-01-17 16:00', 
-'2023-01-17 17:00', 
-(SELECT id FROM music_lesson WHERE time_start = '2023-01-17 16:00' AND skill_level = 'intermediate' AND instructor_id = (SELECT id FROM instructor where employment_id = 2)),
-(SELECT id FROM student WHERE person_id = (SELECT id FROM person WHERE person_number = 195367418395))),
+('2023-01-18 16:00', 
+'2023-01-18 17:00', 
+(SELECT id FROM music_lesson WHERE time_start = '2023-01-18 16:00' AND skill_level = 'intermediate' AND instructor_id = (SELECT id FROM instructor where employment_id = 2)),
+(SELECT id FROM student WHERE person_id = (SELECT id FROM person WHERE person_number = 195367418395))), -- ensemble
 
-('2023-01-17 16:00', 
-'2023-01-17 17:00', 
-(SELECT id FROM music_lesson WHERE time_start = '2023-01-17 16:00' AND skill_level = 'intermediate' AND instructor_id = (SELECT id FROM instructor where employment_id = 2)),
-(SELECT id FROM student WHERE person_id = (SELECT id FROM person WHERE person_number = 199839379376))),
-
-('2023-01-17 17:00', 
-'2023-01-17 18:00', 
-(SELECT id FROM music_lesson WHERE time_start = '2023-01-17 17:00' AND skill_level = 'advanced' AND instructor_id = (SELECT id FROM instructor where employment_id = 1)),
-(SELECT id FROM student WHERE person_id = (SELECT id FROM person WHERE person_number = 196163772791))),
+('2023-01-18 16:00', 
+'2023-01-18 17:00', 
+(SELECT id FROM music_lesson WHERE time_start = '2023-01-18 16:00' AND skill_level = 'intermediate' AND instructor_id = (SELECT id FROM instructor where employment_id = 2)),
+(SELECT id FROM student WHERE person_id = (SELECT id FROM person WHERE person_number = 199839379376))), -- ensemble
 
 ('2023-01-17 17:00', 
 '2023-01-17 18:00', 
 (SELECT id FROM music_lesson WHERE time_start = '2023-01-17 17:00' AND skill_level = 'advanced' AND instructor_id = (SELECT id FROM instructor where employment_id = 1)),
-(SELECT id FROM student WHERE person_id = (SELECT id FROM person WHERE person_number = 199938380350))),
+(SELECT id FROM student WHERE person_id = (SELECT id FROM person WHERE person_number = 196163772791))), -- individual
 
-('2023-01-17 16:00', 
-'2023-01-17 17:00', 
-(SELECT id FROM music_lesson WHERE time_start = '2023-01-17 16:00' AND skill_level = 'intermediate' AND instructor_id = (SELECT id FROM instructor where employment_id = 2)),
-(SELECT id FROM student WHERE person_id = (SELECT id FROM person WHERE person_number = 198617719937))),
+('2023-01-18 17:00', 
+'2023-01-18 18:00', 
+(SELECT id FROM music_lesson WHERE time_start = '2023-01-18 17:00' AND skill_level = 'advanced' AND instructor_id = (SELECT id FROM instructor where employment_id = 1)),
+(SELECT id FROM student WHERE person_id = (SELECT id FROM person WHERE person_number = 199938380350))), -- individual
 
-('2023-01-18 14:00', 
-'2023-01-18 15:00', 
-(SELECT id FROM music_lesson WHERE time_start = '2023-01-18 14:00' AND skill_level = 'beginner' AND instructor_id = (SELECT id FROM instructor where employment_id = 1)),
-(SELECT id FROM student WHERE person_id = (SELECT id FROM person WHERE person_number = 197275573864)));
+('2023-01-18 16:00', 
+'2023-01-18 17:00', 
+(SELECT id FROM music_lesson WHERE time_start = '2023-01-18 16:00' AND skill_level = 'intermediate' AND instructor_id = (SELECT id FROM instructor where employment_id = 2)),
+(SELECT id FROM student WHERE person_id = (SELECT id FROM person WHERE person_number = 198617719937))), -- ensemble
+
+('2023-01-17 15:00', 
+'2023-01-17 16:00', 
+(SELECT id FROM music_lesson WHERE time_start = '2023-01-17 15:00' AND skill_level = 'beginner' AND instructor_id = (SELECT id FROM instructor where employment_id = 2)),
+(SELECT id FROM student WHERE person_id = (SELECT id FROM person WHERE person_number = 197275573864))); -- group
 
 -- Individual Lessons 
 INSERT INTO 
@@ -1051,9 +1052,13 @@ INSERT INTO
     instrument_type_id
     )
 VALUES
-((SELECT id FROM music_lesson WHERE time_start = '2023-01-18 14:00:00' AND instructor_id = 1),(SELECT id FROM instrument_type WHERE type = 'piano')),
-((SELECT id FROM music_lesson WHERE time_start = '2023-01-17 15:00:00' AND instructor_id = 2),(SELECT id FROM instrument_type WHERE type = 'violin'));
+((SELECT id FROM music_lesson WHERE time_start = '2023-01-17 14:00' AND instructor_id = 1),(SELECT id FROM instrument_type WHERE type = 'piano')),
 
+((SELECT id FROM music_lesson WHERE time_start = '2023-01-17 15:00:00' AND instructor_id = 1),(SELECT id FROM instrument_type WHERE type = 'piano')),
+
+((SELECT id FROM music_lesson WHERE time_start = '2023-01-17 17:00' AND instructor_id = 1),(SELECT id FROM instrument_type WHERE type = 'piano')),
+
+((SELECT id FROM music_lesson WHERE time_start = '2023-01-18 17:00' AND instructor_id = 1),(SELECT id FROM instrument_type WHERE type = 'piano'));
 
 -- Group Lessons 
 INSERT INTO
@@ -1064,16 +1069,19 @@ INSERT INTO
     instrument_type_id
   )
 VALUES
-    ((SELECT id FROM music_lesson WHERE time_start = '2023-01-17 14:00:00' AND instructor_id = 1), 2, 4, (SELECT id FROM instrument_type WHERE type = 'piano')), -- 2 students
-    ((SELECT id FROM music_lesson WHERE time_start = '2023-01-17 17:00:00' AND instructor_id = 1), 2, 4, (SELECT id FROM instrument_type WHERE type = 'piano')); -- 2 students
+    ((SELECT id FROM music_lesson WHERE time_start = '2023-01-17 15:00' AND instructor_id = 2), 2, 4, (SELECT id FROM instrument_type WHERE type = 'violin')); -- 2 students
 
 -- ensemble
 INSERT INTO
   ensemble (
     music_lesson_id,
-    minimum_number_of_students,
-    maximum_number_of_students,
     genre_id
   )
 VALUES
-    ((SELECT id FROM music_lesson WHERE time_start = '2023-01-17 16:00:00' AND instructor_id = 2), 3, 12, (SELECT id FROM genre WHERE genre = 'jazz')); -- 3 students
+    ((SELECT id FROM music_lesson WHERE time_start = '2023-01-17 16:00' AND instructor_id = 2), (SELECT id FROM genre WHERE genre = 'jazz')),
+    ((SELECT id FROM music_lesson WHERE time_start = '2023-01-17 17:00' AND instructor_id = 2), (SELECT id FROM genre WHERE genre = 'jazz')),
+    ((SELECT id FROM music_lesson WHERE time_start = '2023-01-18 16:00' AND instructor_id = 2), (SELECT id FROM genre WHERE genre = 'classical')), -- 3 students
+    ((SELECT id FROM music_lesson WHERE time_start = '2023-01-18 17:00' AND instructor_id = 2), (SELECT id FROM genre WHERE genre = 'classical')),
+    ((SELECT id FROM music_lesson WHERE time_start = '2023-01-19 16:00' AND instructor_id = 2), (SELECT id FROM genre WHERE genre = 'jazz')),
+    ((SELECT id FROM music_lesson WHERE time_start = '2023-01-19 17:00' AND instructor_id = 2), (SELECT id FROM genre WHERE genre = 'jazz')); 
+    
