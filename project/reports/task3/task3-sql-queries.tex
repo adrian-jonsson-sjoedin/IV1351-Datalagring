@@ -36,7 +36,7 @@
 \rfoot{}
 
 % Create title page
-\title{Task 3}
+\title{Task 3, version 2}
 \subtitle{Datalagring, IV1351}
 \author{Adrian Jonsson Sjödin \\ adriansj@kth.se}
 \date{\today} 
@@ -53,8 +53,13 @@ The purpose of task 3 was to write OLAP queries towards the database created in 
 the OLAP queries is what will be covered in this report.
 
 \chapter{Method}
-The DBMS used for the Sound Good Music School database is MySQL 8 and the queries was developed using a combination of DbGate and the CLI. The queries was tested manually 
-by retrieving the data in question from the right tables and see if the query result matched was as expected.
+The DBMS used for the Sound Good Music School database is MySQL 8 and the queries was developed using a combination of MySQL Workbench and the CLI. 
+
+The process behind creating the queries was to first breaking them up into smaller parts and test that we got the expected output from them when they where run in the CLI, and then 
+keep building upon them until we achieve the sought after query. For this we used MySQL Workbench since it is easier to write the code and modify it there than directly in the CLI.
+
+The queries was then tested manually by retrieving the data in question from the right tables and manually look at the tables and see if the query result matched what we got when we looked directly at the tables 
+and noted with pen and paper the data. 
 
 
 \chapter{Result}
@@ -65,42 +70,42 @@ The SQL scripts can be found here:
 
 \begin{figure}[h]
     \begin{center}
-        \includegraphics[width=0.70\textwidth]{../img/lessonsSQL.png} \\
-        \includegraphics[width=0.70\textwidth]{../img/lessons.png}
+        \includegraphics[width=0.70\textwidth]{../img/lessonSQLv2.png} \\
+        \includegraphics[width=0.70\textwidth]{../img/lessonV2.png}
         \caption{Total number of lessons per year and month for each lesson type}
         \label{fig:lessons}
     \end{center}
 \end{figure}
 \begin{figure}[h]
     \begin{center}
-        \includegraphics[width=0.49\textwidth]{../img/siblingsSQL.png} 
-        \includegraphics[width=0.49\textwidth]{../img/siblings.png}
+        \includegraphics[width=0.70\textwidth]{../img/bookedLessonSQL.png} \\
+        \includegraphics[width=0.70\textwidth]{../img/bookedLessons.png}
+        \caption{Total number of available lesson per year and month and how many lessons have students that have booked them for each lesson type}
+        \label{fig:booked}
+    \end{center}
+\end{figure}
+\begin{figure}[h]
+    \begin{center}
+        \includegraphics[width=0.49\textwidth]{../img/siblingsSQLv2.png} 
+        \includegraphics[width=0.49\textwidth]{../img/siblingsV2.png}
         \caption{The number of siblings for each student}
         \label{fig:siblings}
     \end{center}
 \end{figure}
 \begin{figure}[h]
     \begin{center}
-        \includegraphics[width=0.76\textwidth]{../img/workloadSQL.png} \\
-        \includegraphics[width=0.76\textwidth]{../img/workload.png}
+        \includegraphics[width=\textwidth]{../img/workloadSQLv2.png} \\
+        \includegraphics[width=0.76\textwidth]{../img/workloadV2.png}
         \caption{List of all instructors that have more than a specific nr of lesson \\during the current month}
         \label{fig:workload}
     \end{center}
 \end{figure}
 \begin{figure}[h]
     \begin{center}
-        \includegraphics[width=\textwidth]{../img/ensembleSQL.png} \\
-        \includegraphics[width=\textwidth]{../img/ensemble_spots.png}
+        \includegraphics[width=\textwidth]{../img/ensembleSQLv2.png} \\
+        \includegraphics[width=\textwidth]{../img/ensembleSpotsV2.png}
         \caption{List all ensembles held during the next week and how many spots are left, sorted by music genre and weekday}
         \label{fig:ensemble}
-    \end{center}
-\end{figure}
-\begin{figure}[h]
-    \begin{center}
-        \includegraphics[width=\textwidth]{../img/explain_analyze_no_view_month_year.png} \\
-        \includegraphics[width=\textwidth]{../img/explain_analyze_lessons_per_month_year.png}
-        \caption{On top is the query from fig. \ref{fig:lessons} without storing it in a view while the bottom is the same query when stored in a view}
-        \label{fig:explainLesson}
     \end{center}
 \end{figure}
 \begin{figure}[h]
@@ -112,53 +117,63 @@ The SQL scripts can be found here:
     \end{center}
 \end{figure}
 
-The query seen in fig. \ref{fig:lessons} is the one that gives how many lectures we have per month and year and how many of each type. It is the easiest query out of 
+The query seen in fig. \ref{fig:lessons} is the one that gives how many lectures we have per month and year and how many of each type. The leftmost column in it tells us how many 
+available lessons the school currently have by looking in the "music\_lesson" table. The other three columns shows us how many of each type we have. It is the easiest query out of 
 the four and uses aggregate functions in combination with flow control functions.
 
-The query seen in fig. \ref{fig:siblings} is the one that displays how many siblings each student have that is also enrolled at the school. This was the query that took
-me the longest to write and has a correlated sub-query in the \textbf{SELECT} clause.
+In fig. \ref{fig:booked} we have a similar query but in this one the three columns that correspond to the different lesson types instead tells us how many of that type have been created. They will only 
+be created when a new booking is created for a student to a lesson and thus tells us how many of the different lessons have at least one student signed up to it. This query uses aggregate functions and 
+JOIN operators.
 
-The third query is seen in fig. \ref{fig:workload} and is the one that list all instructors that have more than a specific number of lessons during the current month.
-This query makes use of \textbf{INNER JOIN} to create a temporary table containing the data we wanted. 
 
-Lastly we have the query seen in fig. \ref{fig:ensemble} which is the one that lists all available ensemble spots for the coming week. It utilizes a combination of flow
-control functions to display available spots, and \textbf{INNER JOIN} to get the data from the two tables where the keys are matching.
+The query seen in fig. \ref{fig:siblings} is the one that displays how many siblings each student have that is also enrolled at the school. This query uses a correlated sub-query to achieve the sought after 
+result.
+
+The query seen in fig. \ref{fig:workload} is the one that list all instructors that have more than a specific number of lessons during the current month. This and the next query were the ones who gave me the most 
+trouble. This because the query makes use of sub-queries, JOIN clauses, aggregate functions, and conditional filtering, making it quite complex for me. 
+Note that the column "total\_number\_of\_lessons" is counting just the lessons that have students assign to them. I did it this way because it felt the most relevant to know because if there's no students 
+taking a class it stands to reason that the instructor won't be holding that class. If one want to get just the total number of lessons an instructor is assigned to then one can easily get that from the 
+"music\_lesson" table.
+
+Lastly we have the query seen in fig. \ref{fig:ensemble} which is the one that lists all available ensemble spots for the coming week. Like the previous query it utilizes a combination JOIN clauses, 
+aggregate functions, flow control functions, conditional filtering with the WHERE clause, and GROUP BY and ORDER BY clauses for grouping and sorting the results.
+
+In the last figure \ref{fig:explainSiblings} we see the result of running \textbf{EXPLAIN ANALYZE} on the query \ref{fig:siblings}.
 
 
 
 
 \chapter{Discussion}
 As can be seen from the queries in the Result section, all queries are stored as views. This is to make it easier to run them at a later date. All queries except the 
-query seen in fig. \ref{fig:lessons} are stored in full. This was done because only that query had the requirement of being able to vary what was shown based of a 
+query seen in fig. \ref{fig:booked} are stored in full. This was done because only that query had the requirement of being able to vary what was shown based of a 
 requirement. The rest of them didn't have that condition and thus it would be easier to store the whole query as a view. 
 
-The reason why I didn't use materialized view is simply because MySQL 8 (or earlier versions) doesn't seem to support it. If I could have used them then I would most 
-likely have used them on query \ref{fig:lessons} and \ref{fig:siblings}. The first since I'm assuming the external application will create all lessons for multiple weeks
-in advanced and thus not needing to update it very often. This would allow for a faster reading of data whenever it is needed, with the drawback of having to update the 
+The reason why I didn't use materialized view is simply because MySQL 8 (or earlier versions) doesn't support it. If I could have used them then I would most 
+likely have used them on query \ref{fig:lessons}, \ref{fig:siblings} and \ref{fig:workload}. 
+
+The first since the query is expected to be performed a few times per week and involves aggregation. Furthermore the rows in the table "music\_lesson" will most likely be created in 
+batches as the schedule is set and thus the view shouldn't need to be updated that often. This would allow for a faster reading of data whenever it is needed, with the drawback of having to update the 
 table whenever new lessons are added. But most likely that wouldn't be too often making it worthwhile turning it into a materialized view.
 
-The same reasoning is behind why I would make query \ref{fig:siblings} into a materialized view. There will be a significant larger number of times I will read the table 
-I get from that query as opposed to the number of times the materialized view would have to be updated. 
+
+While the query seen in fig. \ref{fig:siblings} is simple I would still turn it into a materialized view since there will most likely be a significant larger number of times that I will read the table,
+as opposed to updating it. After all it will only be required to be updated whenever a new student have been added to check if said student has a sibling already enrolled in the school.
+
+Lastly the query seen in fig. \ref{fig:workload} would probably benefit from being a materialized view as the query is expected to be executed daily and involves multiple joins and aggregation functions.
 
 For the rest of the queries I think a view is the better choice since the columns containing the data we need to retrieve most likely will be updated often. For example 
 the result from query \ref{fig:ensemble} will change whenever another students booking for an ensemble lessons is accepted, or they cancel their booking. And since the 
 result will be displayed on the web page it needs to be up to date.
 
-The database didn't need any permanent changes to make the queries. I did however make a temporary change by using DbGate to change the number of participants that had 
-signed up for ensemble lessons larger. This so that I could test that query \ref{fig:ensemble} worked as intended. It was the easy solution for testing purpose since it
-didn't require me to manually create more rows in the \textbf{bookings} table and match them with the corresponding music lesson (something that would be handled by 
-the application that the administrative staff uses). 
+The database didn't need any permanent changes to make the queries. I did however have to insert some extra data to test some of the queries since I've only inputted lesson for a few days in the database. 
 
-As mentioned in the Result section, query \ref{fig:siblings} uses a correlated sub-query. It is possible I could get around this with more time and use some kind of 
-\textbf{JOIN} operator instead, but currently I couldn't find a better solution. 
 
-We see in fig. \ref{fig:explainLesson} that it took on average 0.202 ms to read all 21 rows in the \textbf{music\_lesson} table and that the aggregation took 3.019ms for
-when the query was not stored as a view. And the outermost table scan took 3.024. Meaning the majority of the time was spent on the aggregation and the outermost table scan.
-Giving us a total of about 6.23 ms. Looking at the result for the view we see that the reading of rows in the \textbf{music\_lesson} table was a bit faster and here 
-taking 0.071 ms and the aggregation took only 0.263 ms. The outer table scan was also faster, clocking in at 0.267 ms. However we have two more costs in the view at 
-0.292 ms and 0.295 ms, giving us a total of about 1.19 ms. This means that the view in this case is more than five times faster.
+We see in \ref{fig:explainSiblings} a slight difference between the two results. When run on the saved view, MySQL first materialize the view, which means it creates a temporary table containing 
+the result of the view, and then scans that temporary table. On the other hand when \textbf{EXPLAIN ANALYZE} is run on the original query MySQL directly executes the query without materializing it first.
+The actual execution time and other metrics however are very similar between the two results, with only small minor differences. The most time-consuming part of the query is as expected 
+the correlated sub-query. This sub-query is executed once for each row returned by the outer query, as is indicated by the loops=9 in both cases.
 
-We don't get same result for the view and non view correlated sub-queries seen in fig \ref{fig:explainSiblings} however. There the view takes approximately 0.985 ms and
-the non view takes approximately 0.302 ms, making the view more than three times slower in this case. 
+One way of optimizing the query could be by trying to use a derived table with a \textbf{JOIN} instead of the correlated sub-query. That way one could avoid executing the sub-query multiple times which may 
+lead to better performance. However I didn't manage to implement it different earlier and because of time constraints it will have to stay as a correlated sub-query unfortunately.
 
 \end{document}
