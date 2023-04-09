@@ -4,9 +4,27 @@
 
 -- total number of lessons per year and month for each lesson type
 -- This query is expected to be performed a few times per week.
--- Run with: SELECT * FROM lessons_per_month_year WHERE year = 2023;
+-- Run with: SELECT * FROM lessons_per_month_year;
 DROP VIEW IF EXISTS  lessons_per_month_year;
 CREATE VIEW lessons_per_month_year AS 
+SELECT 
+    YEAR(time_start) AS year,
+    MONTH(time_start) AS month,
+    COUNT(*) AS total_lessons,
+    SUM(CASE WHEN lesson_type = 'group' THEN 1 ELSE 0 END) AS group_lessons,
+    SUM(CASE WHEN lesson_type = 'individual' THEN 1 ELSE 0 END) AS individual_lessons,
+    SUM(CASE WHEN lesson_type = 'ensemble' THEN 1 ELSE 0 END) AS ensemble_lessons
+FROM
+    music_lesson
+GROUP BY
+    YEAR(time_start), MONTH(time_start)
+ORDER BY
+    year ASC, month ASC;
+
+-- This query is expected to be performed a few times per week.
+-- Run with: SELECT * FROM booked_lessons WHERE year = 2023;
+DROP VIEW IF EXISTS  booked_lessons;
+CREATE VIEW booked_lessons AS 
 SELECT 
     MONTH(ml.time_start) AS month, 
     YEAR(ml.time_start) AS year,
